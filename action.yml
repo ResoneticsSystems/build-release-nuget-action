@@ -35,51 +35,18 @@ runs:
       env:
         NUGET_AUTH_TOKEN: ${{inputs.packagesToken}}
       # - name: Build
-      #   run: dotnet build --configuration Release
-      # - name: Pack
-      #   run: dotnet pack ${{inputs.projectPath}} --output nuget-packages --configuration Release
-      # - name: Push
-      #   run: dotnet nuget push **/*.nupkg --skip-duplicate --source https://nuget.pkg.github.com/${{github.repository_owner}}/index.json
-      # - name: Create tag
-      #   uses: actions/github-script@v5
-      #   with:
-      #     script: |
-      #       github.rest.git.createRef({
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         ref: 'refs/tags/NuGet_${{steps.get-version.outputs.version}}',
-      #         sha: context.sha
-      #       })
-
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v2
-#       - uses: kzrnm/get-net-sdk-project-versions-action@v1
-#         id: get-version
-#         with:
-#           proj-path: ${{ env.projectPath }}
-      # - name: Setup .NET
-      #   uses: actions/setup-dotnet@v1
-      #   with:
-      #     dotnet-version: 3.1.x
-      #     source-url: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
-      #   env:
-      #     NUGET_AUTH_TOKEN: ${{inputs.packagesToken}}
-      # - name: Build
-      #   run: dotnet build --configuration Release
-      # - name: Pack
-      #   run: dotnet pack ${{inputs.projectPath}} --output nuget-packages --configuration Release
-      # - name: Push
-      #   run: dotnet nuget push **/*.nupkg --skip-duplicate --source https://nuget.pkg.github.com/${{github.repository_owner}}/index.json
-      # - name: Create tag
-      #   uses: actions/github-script@v5
-      #   with:
-      #     script: |
-      #       github.rest.git.createRef({
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         ref: 'refs/tags/NuGet_${{steps.get-version.outputs.version}}',
-      #         sha: context.sha
-      #       })
+    - run: | 
+        dotnet build --configuration Release
+          dotnet pack ${{inputs.projectPath}} --output nuget-packages --configuration Release
+          dotnet nuget push **/*.nupkg --skip-duplicate --source https://nuget.pkg.github.com/${{github.repository_owner}}/index.json
+      shell: bash
+    - uses: actions/github-script@v5
+      with:
+        script: |
+          github.rest.git.createRef({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            ref: 'refs/tags/NuGet_${{steps.get-version.outputs.version}}',
+            sha: context.sha
+          })
+   
