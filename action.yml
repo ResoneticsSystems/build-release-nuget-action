@@ -1,5 +1,8 @@
-name: .NET CI
+name: .NET Build Publish NuGet GitHub Package
 description: .NET CI Workflow with NuGet publishing to GitHub packages.
+branding:
+  icon: 'arrow-up-circle'
+  color: 'blue'
 on:
     push:
         branches: [$default-branch]
