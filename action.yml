@@ -28,7 +28,8 @@ runs:
       id: get-version
       with:
         proj-path: ${{ inputs.projectPath }}
-      run: ls
+    - run: ls
+      shell: bash
 
 
 # jobs:
