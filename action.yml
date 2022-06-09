@@ -5,22 +5,22 @@ branding:
   color: 'blue'
 
 on:
-  workflow_dispatch:
-    inputs:
-      projectPath:
-        description: '.NET project to build. Passed from the caller workflow'
-        required: true
-        type: string
-        default: '*'
-      packagesToken:
-        description: 'Personal access token with permissions: (delete:packages, repo, write:packages). Passed from the caller workflow'
-        required: true
-        type: string
-        default: '*'
   push:
     branches: [$default-branch]
   pull_request:
     branches: [$default-branch]
+
+inputs:
+  projectPath:
+    description: '.NET project to build. Passed from the caller workflow'
+    required: true
+    type: string
+    default: '*'
+  packagesToken:
+    description: 'Personal access token with permissions: (delete:packages, repo, write:packages). Passed from the caller workflow'
+    required: true
+    type: string
+    default: '*'
 
 env:
   DOTNET_PROJ_PATH: ${{ github.event.inputs.projectPath }}
