@@ -22,8 +22,8 @@ on:
   pull_request:
     branches: [$default-branch]
 
-# env:
-#   DOTNET_PROJ_PATH: ${{ inputs.projectPath }}
+env:
+  DOTNET_PROJ_PATH: ${{ github.event.inputs.projectPath }}
 
 jobs:
   build:
@@ -33,7 +33,7 @@ jobs:
       - uses: kzrnm/get-net-sdk-project-versions-action@v1
         id: get-version
         with:
-          proj-path: "${{ github.event.inputs.projectPath }}"
+          proj-path: ${{ env.DOTNET_PROJ_PATH }}
       # - name: Setup .NET
       #   uses: actions/setup-dotnet@v1
       #   with:
