@@ -27,7 +27,7 @@ runs:
     - uses: kzrnm/get-net-sdk-project-versions-action@v1
       id: get-version
       with:
-        proj-path: ${{ env.projectPath }}
+        proj-path: ${{ inputs.projectPath }}
 
 
 # jobs:
