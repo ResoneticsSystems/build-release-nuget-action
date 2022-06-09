@@ -15,6 +15,11 @@ on:
         required: true
         type: string
         default: '*'
+      packagesToken:
+        description: 'Personal access token with permissions: (delete:packages, repo, write:packages). Passed from the caller workflow'
+        required: true
+        type: string
+        default: '*'
 
 jobs:
   build:
@@ -24,20 +29,20 @@ jobs:
         - uses: kzrnm/get-net-sdk-project-versions-action@v1
           id: get-version
           with:
-            proj-path: ${{ inputs.projectPath }}
+            proj-path: ${{inputs.projectPath}}
         - name: Setup .NET
           uses: actions/setup-dotnet@v1
           with:
             dotnet-version: 3.1.x
             source-url: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
           env:
-            NUGET_AUTH_TOKEN: ${{secrets.PACKAGES_TOKEN}}
+            NUGET_AUTH_TOKEN: ${{inputs.packagesToken}}
         - name: Build
           run: dotnet build --configuration Release
         - name: Pack
-          run: dotnet pack ${{ inputs.projectPath }} --output nuget-packages --configuration Release
+          run: dotnet pack ${{inputs.projectPath}} --output nuget-packages --configuration Release
         - name: Push
-          run: dotnet nuget push **/*.nupkg --skip-duplicate --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
+          run: dotnet nuget push **/*.nupkg --skip-duplicate --source https://nuget.pkg.github.com/${{github.repository_owner}}/index.json
         - name: Create tag
           uses: actions/github-script@v5
           with:
