@@ -22,7 +22,7 @@ jobs:
           uses: actions/setup-dotnet@v1
           with:
             dotnet-version: 3.1.x
-            source-url: https://nuget.pkg.github.com/ResoneticsSystems/index.json
+            source-url: https://nuget.pkg.github.com/<organization-name>/index.json
           env:
             NUGET_AUTH_TOKEN: ${{secrets.PACKAGES_TOKEN}}
         - name: Build
@@ -30,7 +30,7 @@ jobs:
         - name: Pack
           run: dotnet pack src/<project-name>.csproj --output nuget-packages --configuration Release
         - name: Push
-          run: dotnet nuget push **/*.nupkg --skip-duplicate --source https://nuget.pkg.github.com/ResoneticsSystems/index.json
+          run: dotnet nuget push **/*.nupkg --skip-duplicate --source https://nuget.pkg.github.com/<organization-name>/index.json
         - name: Create tag
           uses: actions/github-script@v5
           with:
