@@ -24,12 +24,12 @@ runs:
   using: "composite"
   steps:
     - uses: actions/checkout@v2
+    - run: ls
+      shell: bash
     - uses: kzrnm/get-net-sdk-project-versions-action@v1
       id: get-version
       with:
         proj-path: ${{ inputs.projectPath }}
-    - run: ls
-      shell: bash
 
 
 # jobs:
