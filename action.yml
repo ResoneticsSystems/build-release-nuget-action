@@ -23,7 +23,7 @@ inputs:
     default: '*'
 
 env:
-  DOTNET_PROJ_PATH: ${{ github.event.inputs.projectPath }}
+  DOTNET_PROJ_PATH: ${{ inputs.projectPath }}
 
 jobs:
   build:
