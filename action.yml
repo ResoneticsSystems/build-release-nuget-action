@@ -14,6 +14,7 @@ on:
         description: '.NET project to build. Passed from the caller workflow'
         required: true
         type: string
+        default: '*'
 
 jobs:
   build:
