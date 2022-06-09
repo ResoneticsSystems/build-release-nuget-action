@@ -1,14 +1,8 @@
-name: .NET Build Publish NuGet GitHub Package
-description: .NET CI Workflow with NuGet publishing to GitHub packages.
+name: '.NET Build Publish NuGet GitHub Package'
+description: '.NET CI Workflow with NuGet publishing to GitHub packages.'
 branding:
   icon: 'arrow-up-circle'
   color: 'blue'
-
-on:
-  push:
-    branches: [$default-branch]
-  pull_request:
-    branches: [$default-branch]
 
 inputs:
   projectPath:
@@ -22,18 +16,29 @@ inputs:
     type: string
     default: '*'
 
-env:
-  DOTNET_PROJ_PATH: ${{ inputs.projectPath }}
+# outputs:
+#   random-number:
+#     description: "Random number"
+#     value: ${{ steps.random-number-generator.outputs.random-number }}
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v2
+    - uses: kzrnm/get-net-sdk-project-versions-action@v1
+      id: get-version
+      with:
+        proj-path: ${{ env.projectPath }}
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: kzrnm/get-net-sdk-project-versions-action@v1
-        id: get-version
-        with:
-          proj-path: ${{ env.DOTNET_PROJ_PATH }}
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - uses: kzrnm/get-net-sdk-project-versions-action@v1
+#         id: get-version
+#         with:
+#           proj-path: ${{ env.projectPath }}
       # - name: Setup .NET
       #   uses: actions/setup-dotnet@v1
       #   with:
