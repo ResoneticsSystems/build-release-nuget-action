@@ -43,7 +43,6 @@ runs:
     - run: | 
         dotnet build --configuration Release
         dotnet pack ${{inputs.projectPath}} --output nuget-packages --configuration Release
-    #   dotnet nuget push **/*.nupkg --skip-duplicate --source "https://nuget.pkg.github.com/${{github.repository_owner}}/index.json"
         dotnet nuget push **/*.nupkg --skip-duplicate --api-key ${{inputs.packagesToken}} --source "github"
       shell: bash
     - uses: actions/github-script@v5
