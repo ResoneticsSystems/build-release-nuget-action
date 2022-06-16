@@ -16,7 +16,7 @@ inputs:
     type: string
     default: '*'
   githubToken:
-    description: 'Enter your secrets.GITHUB_TOKEN'
+    description: 'use github token'
     required: true
     type: string
     default: '*'
@@ -41,10 +41,9 @@ runs:
         NUGET_AUTH_TOKEN: ${{inputs.githubToken}}
       # - name: Build
     - run: | 
-#        dotnet nuget add source "https://nuget.pkg.github.com/${{github.repository_owner}}/index.json" --name "github" --username ${{ github.actor }} --password ${{ inputs.packagesToken }} --store-password-in-clear-text
         dotnet build --configuration Release
         dotnet pack ${{inputs.projectPath}} --output nuget-packages --configuration Release
-        dotnet nuget push **/*.nupkg --skip-duplicate --source "https://nuget.pkg.github.com/${{github.repository_owner}}/index.json"
+    #   dotnet nuget push **/*.nupkg --skip-duplicate --source "https://nuget.pkg.github.com/${{github.repository_owner}}/index.json"
         dotnet nuget push **/*.nupkg --skip-duplicate --api-key ${{inputs.packagesToken}} --source "github"
       shell: bash
     - uses: actions/github-script@v5
