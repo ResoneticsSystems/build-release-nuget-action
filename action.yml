@@ -41,7 +41,6 @@ runs:
       # - name: Build
     - run: | 
         dotnet nuget add source "https://nuget.pkg.github.com/${{github.repository_owner}}/index.json" --name "github" --username ${{ github.actor }} --password ${{ inputs.packagesToken }} --store-password-in-clear-text
-        dotnet nuget add source "https://api.nuget.org/v3/index.json" --name "nuget.org"
         dotnet build --configuration Release
         dotnet pack ${{inputs.projectPath}} --output nuget-packages --configuration Release
         dotnet nuget push **/*.nupkg --skip-duplicate
