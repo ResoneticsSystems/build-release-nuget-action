@@ -43,7 +43,7 @@ runs:
         dotnet nuget add source "https://nuget.pkg.github.com/${{github.repository_owner}}/index.json" --name "github" --username ${{ github.actor }} --password ${{ inputs.packagesToken }} --store-password-in-clear-text
         dotnet build --configuration Release
         dotnet pack ${{inputs.projectPath}} --output nuget-packages --configuration Release
-        dotnet nuget push **/*.nupkg --skip-duplicate
+        dotnet nuget push **/*.nupkg --skip-duplicate -s "https://nuget.pkg.github.com/${{github.repository_owner}}/index.json"
       shell: bash
     - uses: actions/github-script@v5
       with:
